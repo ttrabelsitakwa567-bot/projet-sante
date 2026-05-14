@@ -93,17 +93,33 @@
 <script>
     let donnees = [];
 
-    // Charger le fichier CSV
+    // Chargement du CSV avec parsing plus robuste
     fetch('recommandation_data.csv')
         .then(response => response.text())
         .then(data => {
             const lignes = data.split('\n');
             for (let i = 1; i < lignes.length; i++) {
-                const cols = lignes[i].split(',');
+                let ligne = lignes[i].trim();
+                if (ligne === "") continue;
+                // Séparer sans utiliser split(',') à cause des guillemets
+                let cols = [];
+                let dansGuillemets = false;
+                let val = "";
+                for (let c of ligne) {
+                    if (c === '"') {
+                        dansGuillemets = !dansGuillemets;
+                    } else if (c === ',' && !dansGuillemets) {
+                        cols.push(val);
+                        val = "";
+                    } else {
+                        val += c;
+                    }
+                }
+                cols.push(val);
                 if (cols.length >= 4) {
                     donnees.push({
                         maladie: cols[0],
-                        symptomes: cols[1].replace(/"/g, ''),
+                        symptomes: cols[1],
                         specialite: cols[2],
                         medecin: cols[3]
                     });
