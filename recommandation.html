@@ -91,48 +91,15 @@
 <footer>© 2025 - Projet PFE - Université Centrale</footer>
 
 <script>
-    let donnees = [];
-
-    // Chargement du CSV avec parsing plus robuste
-    fetch('recommandation_data.csv')
-        .then(response => response.text())
-        .then(data => {
-            const lignes = data.split('\n');
-            for (let i = 1; i < lignes.length; i++) {
-                let ligne = lignes[i].trim();
-                if (ligne === "") continue;
-                // Séparer sans utiliser split(',') à cause des guillemets
-                let cols = [];
-                let dansGuillemets = false;
-                let val = "";
-                for (let c of ligne) {
-                    if (c === '"') {
-                        dansGuillemets = !dansGuillemets;
-                    } else if (c === ',' && !dansGuillemets) {
-                        cols.push(val);
-                        val = "";
-                    } else {
-                        val += c;
-                    }
-                }
-                cols.push(val);
-                if (cols.length >= 4) {
-                    donnees.push({
-                        maladie: cols[0],
-                        symptomes: cols[1],
-                        specialite: cols[2],
-                        medecin: cols[3]
-                    });
-                }
-            }
-            console.log("Données chargées :", donnees);
-        });
+    const donnees = [
+        { maladie: "paludisme", symptomes: "fièvre frissons sueurs maux de tête", specialite: "Généraliste", medecin: "Médecin généraliste" },
+        { maladie: "varicelle", symptomes: "éruptions cutanées démangeaisons vésicules", specialite: "Pédiatre", medecin: "Dr Karim spécialiste" },
+        { maladie: "hepatite_b", symptomes: "fatigue jaunisse nausées perte appétit", specialite: "Hépatologue", medecin: "Dr Hedi urgentiste" },
+        { maladie: "cardiaque", symptomes: "douleur thoracique essoufflement palpitations", specialite: "Cardiologue", medecin: "Dr Ahmed cardiologue" },
+        { maladie: "rougeole", symptomes: "éruption cutanée fièvre toux conjonctivite", specialite: "Dermatologue", medecin: "Dr Slim pneumologue" }
+    ];
 
     function recommander() {
-        if (donnees.length === 0) {
-            document.getElementById("resultat").innerHTML = "⏳ Chargement des données, veuillez réessayer.";
-            return;
-        }
         let symptomes = document.getElementById("symptomes").value.toLowerCase();
         let maxScore = 0;
         let meilleur = null;
