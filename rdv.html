@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Prendre rendez-vous</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f9ff;
+            color: #1e2a3a;
+        }
+        header {
+            background: linear-gradient(135deg, #0078D4 0%, #005a9e 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        main {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 1rem;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            margin-top: 1.5rem;
+            background: #0078D4;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover { background: #005a9e; }
+        .message {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #e6f3ff;
+            border-radius: 8px;
+            text-align: center;
+        }
+        footer {
+            background: #e6f3ff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1><i class="fas fa-calendar-check"></i> Prendre rendez-vous</h1>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="recommandation.html">Recommandation</a>
+        <a href="rdv.html">RDV</a>
+        <a href="login.html">Connexion</a>
+    </nav>
+</header>
+<main>
+    <div class="card">
+        <h2>📅 Nouveau rendez-vous</h2>
+        <form id="rdvForm">
+            <label>Nom complet :</label>
+            <input type="text" id="nom" required>
+
+            <label>Médecin :</label>
+            <select id="medecin">
+                <option>Médecin généraliste</option>
+                <option>Dr Karim spécialiste</option>
+                <option>Dr Hedi urgentiste</option>
+                <option>Dr Ahmed cardiologue</option>
+                <option>Dr Slim pneumologue</option>
+            </select>
+
+            <label>Date :</label>
+            <input type="date" id="date" required>
+
+            <label>Créneau horaire :</label>
+            <select id="creneau">
+                <option>09:00 - 10:00</option>
+                <option>10:00 - 11:00</option>
+                <option>11:00 - 12:00</option>
+                <option>14:00 - 15:00</option>
+                <option>15:00 - 16:00</option>
+            </select>
+
+            <button type="submit">Confirmer le rendez-vous</button>
+        </form>
+        <div id="message" class="message" style="display:none;"></div>
+    </div>
+</main>
+<footer>© 2025 - Projet PFE - Université Centrale</footer>
+
+<script>
+    document.getElementById('rdvForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nom = document.getElementById('nom').value;
+        const medecin = document.getElementById('medecin').value;
+        const date = document.getElementById('date').value;
+        const creneau = document.getElementById('creneau').value;
+
+        document.getElementById('message').style.display = 'block';
+        document.getElementById('message').innerHTML = `
+            ✅ Rendez-vous confirmé pour ${nom} avec ${medecin} le ${date} (${creneau}).<br>
+            Un rappel sera envoyé par email/SMS.
+        `;
+        document.getElementById('rdvForm').reset();
+    });
+</script>
+</body>
+</html>
