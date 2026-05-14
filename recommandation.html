@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommandation médicale</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f9ff;
+            color: #1e2a3a;
+        }
+        header {
+            background: linear-gradient(135deg, #0078D4 0%, #005a9e 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #0078D4;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover { background: #005a9e; }
+        .result {
+            background: #e6f3ff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+        footer {
+            background: #e6f3ff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1><i class="fas fa-stethoscope"></i> Recommandation médicale</h1>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="recommandation.html">Recommandation</a>
+        <a href="rdv.html">RDV</a>
+        <a href="login.html">Connexion</a>
+    </nav>
+</header>
+<main>
+    <div class="card">
+        <h2>🩺 Quels sont vos symptômes ?</h2>
+        <p>Exemples : fièvre, fatigue, toux, douleur thoracique</p>
+        <input type="text" id="symptomes" placeholder="Saisissez vos symptômes">
+        <button onclick="recommander()">Obtenir une recommandation</button>
+        <div class="result" id="resultat"></div>
+    </div>
+</main>
+<footer>© 2025 - Projet PFE - Université Centrale</footer>
+
+<script>
+    let donnees = [];
+
+    // Charger le fichier CSV
+    fetch('recommandation_data.csv')
+        .then(response => response.text())
+        .then(data => {
+            const lignes = data.split('\n');
+            for (let i = 1; i < lignes.length; i++) {
+                const cols = lignes[i].split(',');
+                if (cols.length >= 4) {
+                    donnees.push({
+                        maladie: cols[0],
+                        symptomes: cols[1].replace(/"/g, ''),
+                        specialite: cols[2],
+                        medecin: cols[3]
+                    });
+                }
+            }
+            console.log("Données chargées :", donnees);
+        });
+
+    function recommander() {
+        if (donnees.length === 0) {
+            document.getElementById("resultat").innerHTML = "⏳ Chargement des données, veuillez réessayer.";
+            return;
+        }
+        let symptomes = document.getElementById("symptomes").value.toLowerCase();
+        let maxScore = 0;
+        let meilleur = null;
+
+        for (let item of donnees) {
+            let motsRef = item.symptomes.toLowerCase().split(/[ ,]+/);
+            let motsUser = symptomes.split(/[ ,]+/);
+            let score = 0;
+            for (let mot of motsUser) {
+                if (motsRef.includes(mot)) score++;
+            }
+            if (score > maxScore) {
+                maxScore = score;
+                meilleur = item;
+            }
+        }
+        if (meilleur && maxScore > 0) {
+            document.getElementById("resultat").innerHTML = `
+                <strong>🔍 Symptômes :</strong> ${symptomes}<br>
+                <strong>🩺 Maladie probable :</strong> ${meilleur.maladie}<br>
+                <strong>🏥 Spécialité :</strong> ${meilleur.specialite}<br>
+                <strong>👨‍⚕️ Médecin recommandé :</strong> ${meilleur.medecin}
+            `;
+        } else {
+            document.getElementById("resultat").innerHTML = "❌ Aucune correspondance. Consultez un médecin généraliste.";
+        }
+    }
+</script>
+</body>
+</html>
