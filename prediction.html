@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Prédiction 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f9ff;
+            color: #1e2a3a;
+        }
+        header {
+            background: linear-gradient(135deg, #0078D4 0%, #005a9e 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .kpi {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #0078D4;
+            margin: 1rem 0;
+        }
+        footer {
+            background: #e6f3ff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1><i class="fas fa-chart-line"></i> Prédiction Machine Learning</h1>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="recommandation.html">Recommandation</a>
+        <a href="rdv.html">RDV</a>
+        <a href="login.html">Connexion</a>
+        <a href="prediction.html">Prédiction</a>
+    </nav>
+</header>
+<main>
+    <div class="card">
+        <h2>📈 Prévision du nombre de consultations pour 2026</h2>
+        <div class="kpi">≈ 9 consultations</div>
+        <p>Modèle utilisé : <strong>Régression linéaire</strong> (scikit‑learn)</p>
+        <p>Données historiques : 2020 → 2025</p>
+        <p>Cette prévision permet d’anticiper les besoins en ressources médicales et de déclencher des alertes en cas de tendance haussière.</p>
+        <hr>
+        <h3>🌿 Modèles complémentaires</h3>
+        <ul style="text-align: left; display: inline-block; margin-top: 1rem;">
+            <li>🔍 Forêt aléatoire : détection d’alerte sanitaire</li>
+            <li>🌳 Arbre de décision : classification de la tendance (HAUSSE / STABLE / BAISSE)</li>
+        </ul>
+    </div>
+</main>
+<footer>© 2025 - Projet PFE - Université Centrale</footer>
+</body>
+</html>
